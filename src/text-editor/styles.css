@@ -1,0 +1,5 @@
+div[data-text-editor="true"] {
+  min-height: 80px;
+  min-width: 240px;
+  border: 1px solid black;
+}
