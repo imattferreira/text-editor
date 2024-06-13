@@ -1,14 +1,16 @@
 import Node from "../nodes/node";
 import type { Maybe } from "../utils/types";
+import TreeNodeChildren from "./tree-node-children";
 
 class TreeNode {
   #node: Node;
   #parent: Maybe<TreeNode> = null;
-  #children: TreeNode[] = [];
+  #children: TreeNodeChildren;
 
   constructor(node: Node, parentTreeNode: Maybe<TreeNode> = null) {
     this.#node = node;
     this.#parent = parentTreeNode;
+    this.#children = new TreeNodeChildren();
   }
 
   static create(node: Node, parentTreeNode: Maybe<TreeNode> = null) {
@@ -27,7 +29,7 @@ class TreeNode {
     this.#parent = parentNode;
   }
 
-  getChildren(): TreeNode[] {
+  getChildren(): TreeNodeChildren {
     return this.#children;
   }
 }

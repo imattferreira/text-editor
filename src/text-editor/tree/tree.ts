@@ -13,7 +13,12 @@ class Tree {
     return this.#root;
   }
 
-  append(node: TreeNode): void {}
+  append(node: TreeNode): void {
+    if (!this.#root) {
+      this.#root = node;
+      return;
+    }
+  }
 
   delete(node: TreeNode): void {}
 
