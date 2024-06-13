@@ -1,35 +1,32 @@
 import EditorState from "./editor-state";
+import Input from "./input";
+
+interface Config {
+  rootEl: () => HTMLElement;
+  placeholder: string;
+}
 
 class TextEditor {
   #state: EditorState;
   #rootEl: HTMLElement;
-  #inputEl: HTMLDivElement;
+  #input: Input;
 
-  constructor() {
+  constructor(rootEl: HTMLElement, placeholder: string) {
     this.#state = new EditorState();
-  }
-
-  static create() {
-    return new TextEditor();
-  }
-
-  setRootElement(rootEl: HTMLElement) {
+    this.#input = new Input(placeholder);
     this.#rootEl = rootEl;
   }
 
-  // setPlaceholder() {}
+  static create({ placeholder, rootEl }: Config) {
+    return new TextEditor(rootEl(), placeholder);
+  }
 
-  getState() {
+  getState(): EditorState {
     return this.#state;
   }
 
-  render() {
-    const inputEl = document.createElement("div");
-
-    inputEl.setAttribute("data-text-editor", "true");
-
-    this.#inputEl = inputEl;
-    this.#rootEl.appendChild(inputEl);
+  render(): void {
+    this.#rootEl.appendChild(this.#input.getElement());
   }
 }
 
