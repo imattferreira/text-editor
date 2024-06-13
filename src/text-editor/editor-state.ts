@@ -5,6 +5,9 @@ class EditorState {
   // toJson() {}
   // toText() {}
 
+  // fromHtml() {}
+  // fromJson() {}
+
   cleanup() {
     this.#root = null;
   }

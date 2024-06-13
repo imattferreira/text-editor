@@ -1,3 +1,13 @@
+/**
+ * TODO:
+ * - create tree structure
+ * - create cursor
+ * - handle with internal errors
+ * - bold
+ * - italic
+ * - imgs
+ * - video
+ */
 import EditorState from "./editor-state";
 import Input from "./input";
 

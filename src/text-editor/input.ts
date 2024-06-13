@@ -24,21 +24,8 @@ class Input {
       }
     });
 
-    // el.addEventListener("click", this.#onClick);
-
     return el;
   }
-
-  // #addEventListener<K extends keyof HTMLElementEventMap>(
-  //   event: K,
-  //   listener: (this: HTMLDivElement, ev: HTMLElementEventMap[K]) => void
-  // ): void {
-  //   this.#element.addEventListener(event, listener);
-  // }
-
-  // #onClick() {
-  //   console.log("clicked");
-  // }
 
   getElement(): HTMLElement {
     return this.#element;
