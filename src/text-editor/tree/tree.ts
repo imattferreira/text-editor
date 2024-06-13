@@ -1,28 +1,31 @@
 import TextNode from "../nodes/text-node";
+import type { Maybe } from "../utils/types";
 import TreeNode from "./tree-node";
 
 class Tree {
-  #root: TreeNode | null;
+  #root: Maybe<TreeNode>;
 
   constructor() {
     this.#root = null;
   }
 
-  getRoot() {
+  getRoot(): Maybe<TreeNode> {
     return this.#root;
   }
 
-  append() {}
+  append(node: TreeNode): void {}
 
-  delete() {}
+  delete(node: TreeNode): void {}
 
-  current() {}
+  getTail(): Maybe<TreeNode> {
+    return null;
+  }
 
   // TODO: finish iterator implementation
   [Symbol.iterator]() {
     return {
       next: () => ({
-        value: new TreeNode(TextNode.create("")),
+        value: new TreeNode(TextNode.create(""), null),
         done: false,
       }),
     };
