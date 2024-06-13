@@ -1,10 +1,13 @@
+import Node from "./nodes/node";
 import Tree from "./tree/tree";
 
 class EditorState {
   #tree: Tree;
+  #nodes: (typeof Node)[];
 
-  constructor() {
+  constructor(nodes: (typeof Node)[]) {
     this.#tree = new Tree();
+    this.#nodes = nodes;
   }
 
   toHtml() {}
