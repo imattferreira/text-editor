@@ -1,15 +1,35 @@
+import Tree from "./tree/tree";
+
 class EditorState {
-  #root;
+  #tree: Tree;
 
-  // toHtml() {}
-  // toJson() {}
-  // toText() {}
+  constructor() {
+    this.#tree = new Tree();
+  }
 
-  // fromHtml() {}
-  // fromJson() {}
+  toHtml() {}
+
+  toJson() {}
+
+  // TODO: confirm if is correct
+  toText(): string {
+    const result: string[] = [];
+
+    for (const treeNode of this.#tree) {
+      const text = treeNode.getNode().toText();
+
+      result.push(text);
+    }
+
+    return result.join(" ");
+  }
+
+  fromHtml() {}
+
+  fromJson() {}
 
   cleanup() {
-    this.#root = null;
+    this.#tree = new Tree();
   }
 }
 

@@ -1,12 +1,10 @@
 /**
  * TODO:
  * - create tree structure
- * - create cursor
+ * - create cursor (selection)
  * - handle with internal errors
- * - bold
- * - italic
- * - imgs
- * - video
+ * - nodes (bold, italic, img, video)
+ * - listeners (focus, click, blur)
  */
 import EditorState from "./editor-state";
 import Input from "./input";
