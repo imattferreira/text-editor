@@ -17,7 +17,7 @@ class BreakLineNode extends Node {
     return BreakLineNode.create();
   }
 
-  static create() {
+  static create(): BreakLineNode {
     return new BreakLineNode();
   }
 

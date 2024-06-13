@@ -21,7 +21,7 @@ class TextNode extends Node<TextNodeData> {
     return TextNode.create(node.childNodes[0].textContent || "");
   }
 
-  static create(text: string) {
+  static create(text: string): TextNode {
     return new TextNode(text);
   }
 

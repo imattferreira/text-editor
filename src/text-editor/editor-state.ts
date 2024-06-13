@@ -6,7 +6,7 @@ class EditorState {
   #nodes: (typeof Node)[];
 
   constructor(nodes: (typeof Node)[]) {
-    this.#tree = new Tree();
+    this.#tree = Tree.create();
     this.#nodes = nodes;
   }
 
@@ -32,7 +32,7 @@ class EditorState {
   fromJson() {}
 
   cleanup() {
-    this.#tree = new Tree();
+    this.#tree = Tree.create();
   }
 }
 

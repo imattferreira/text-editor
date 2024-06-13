@@ -8,6 +8,10 @@ class TreeNodeChildren {
     this.#items = [];
   }
 
+  static create(): TreeNodeChildren {
+    return new TreeNodeChildren();
+  }
+
   enqueue(node: TreeNode): void {
     this.#items.push(node);
   }

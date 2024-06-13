@@ -26,7 +26,6 @@ class TextEditor {
   constructor(
     rootEl: HTMLElement,
     placeholder: string,
-    // TODO: verify if all nodes are correct and send it to editor-state
     register: Pick<Config, "register">["register"]
   ) {
     for (const node of register.nodes) {
