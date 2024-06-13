@@ -73,13 +73,28 @@ class Tree {
     return target;
   }
 
-  // TODO: finish iterator implementation
+  // TODO: verify if works
   [Symbol.iterator]() {
+    const stack = [this.#root];
+
     return {
-      next: () => ({
-        value: TreeNode.create(TextNode.create("")),
-        done: false,
-      }),
+      next() {
+        if (stack.length === 0) {
+          return { done: true };
+        }
+
+        const node = stack.pop();
+
+        if (!node) {
+          return { done: true };
+        }
+
+        for (const child of node.getChildren()) {
+          stack.push(child);
+        }
+
+        return { value: node, done: false };
+      },
     };
   }
 }

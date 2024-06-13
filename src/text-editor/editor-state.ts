@@ -14,11 +14,15 @@ class EditorState {
 
   toJson() {}
 
-  // TODO: confirm if is correct
   toText(): string {
     const result: string[] = [];
 
     for (const treeNode of this.#tree) {
+      // TODO: fix it
+      if (!treeNode) {
+        continue;
+      }
+
       const text = treeNode.getNode().toText();
 
       result.push(text);
