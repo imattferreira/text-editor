@@ -10,9 +10,13 @@ class EditorState {
     this.#nodes = nodes;
   }
 
-  toHtml() {}
+  toHtml() {
+    return this.#tree.getRoot()?.getNode().toHtml();
+  }
 
-  toJson() {}
+  toJson() {
+    return this.#tree.getRoot()?.getNode().toJson();
+  }
 
   toText(): string {
     const result: string[] = [];
