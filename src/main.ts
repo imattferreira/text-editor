@@ -15,8 +15,8 @@ function main() {
 
   textEditor.render();
 
-  textEditor.onFocus(() => console.log("focused"));
-  textEditor.onBlur(() => console.log("blurred"));
+  // textEditor.onFocus(() => console.log("focused"));
+  // textEditor.onBlur(() => console.log("blurred"));
 
   // textEditor.getState().toJson();
   // textEditor.getState().toText();
