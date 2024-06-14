@@ -6,7 +6,7 @@ import "./text-editor/styles.css";
 
 function main() {
   const textEditor = TextEditor.create({
-    placeholder: "Hello World!",
+    placeholder: "placeholder",
     register: {
       nodes: [TextNode, BreakLineNode, ParagraphNode],
     },
@@ -19,8 +19,11 @@ function main() {
   // textEditor.onBlur(() => console.log("blurred"));
 
   // textEditor.getState().toJson();
-  // textEditor.getState().toText();
   // textEditor.getState().toHtml();
+  // textEditor.getState().toText();
+
+  // textEditor.getState().fromJson();
+  // textEditor.getState().fromHtml();
 }
 
 main();
