@@ -26,7 +26,7 @@ class TextNode extends Node<TextNodeData> {
   }
 
   toHtml(): HTMLElement {
-    const el = document.createElement("p");
+    const el = document.createElement("span");
     const text = document.createTextNode(this.data.text);
 
     el.appendChild(text);
