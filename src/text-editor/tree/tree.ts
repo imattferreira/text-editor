@@ -73,7 +73,6 @@ class Tree {
     return target;
   }
 
-  // TODO: verify if works
   [Symbol.iterator]() {
     const stack = [this.#root];
 

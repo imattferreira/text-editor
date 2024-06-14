@@ -4,6 +4,7 @@ import { Maybe } from "./utils/types";
 
 class EditorState {
   #tree: Tree;
+  // TODO: store only the active node (?!)
   #registeredNodes: NodeRegister[];
 
   constructor(registeredNodes: NodeRegister[]) {
@@ -25,6 +26,14 @@ class EditorState {
 
   toText(): string {
     return this.#tree.getRoot()?.getNode().toText() || "";
+  }
+
+  insert(_node: Node): void {
+    throw new Error("methods not implemented yet!");
+  }
+
+  insertAtPosition(_node: Node, _position: number): void {
+    throw new Error("methods not implemented yet!");
   }
 
   fromHtml() {}

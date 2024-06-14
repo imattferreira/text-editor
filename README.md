@@ -32,6 +32,12 @@ function main() {
   // append text editor to the DOM
   textEditor.render();
 
+  // [WIP] manually append node to tree
+  textEditor.getState().append(node);
+
+  // [WIP] manually append node to tree in a specific position
+  textEditor.getState().appendAtPosition(node, 10);
+
   // listen to input events
   textEditor.onFocus(() => console.log("focused"));
   textEditor.onBlur(() => console.log("blurred"));

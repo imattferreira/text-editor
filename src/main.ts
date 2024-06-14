@@ -1,3 +1,11 @@
+/**
+ * TODO:
+ * - a way to render internal tree
+ * - finish cursor (store and handle position internally)
+ * - a way to insert text to internal tree
+ * - allow copy (selection) and paste
+ * - nodes (bold, italic, img, video)
+ */
 import TextEditor from "./text-editor";
 import BreakLineNode from "./text-editor/nodes/break-line";
 import ParagraphNode from "./text-editor/nodes/paragraph-node";
@@ -18,10 +26,16 @@ function main() {
   // textEditor.onFocus(() => console.log("focused"));
   // textEditor.onBlur(() => console.log("blurred"));
 
+  // WIP
+  // textEditor.getState().insert(node);
+  // textEditor.getState().insertAtPosition(node, 10);
+
+  // WIP
   // textEditor.getState().toJson();
   // textEditor.getState().toHtml();
   // textEditor.getState().toText();
 
+  // WIP
   // textEditor.getState().fromJson();
   // textEditor.getState().fromHtml();
 }

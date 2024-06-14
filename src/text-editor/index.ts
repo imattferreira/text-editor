@@ -1,11 +1,3 @@
-/**
- * TODO:
- * - create tree structure
- * - create cursor (selection)
- * - handle with internal errors
- * - nodes (bold, italic, img, video)
- * - listeners (focus, click, blur)
- */
 import EditorState from "./editor-state";
 import Input from "./input";
 import type { NodeRegister } from "./nodes/node";
