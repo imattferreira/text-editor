@@ -1,5 +1,6 @@
 import Node, { JsonNode } from "./node";
 
+// Paragraph will be is a wrapper of text nodes
 class ParagraphNode extends Node {
   #nodes: Node[];
 
