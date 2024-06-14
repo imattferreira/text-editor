@@ -15,11 +15,12 @@ function main() {
 
   textEditor.render();
 
+  textEditor.onFocus(() => console.log("focused"));
+  textEditor.onBlur(() => console.log("blurred"));
+
   // textEditor.getState().toJson();
   // textEditor.getState().toText();
   // textEditor.getState().toHtml();
-  // textEditor.getState().addListener('focus', () => {});
-  // textEditor.getState().addListener('click', () => {});
 }
 
 main();

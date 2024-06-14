@@ -5,6 +5,10 @@ class Input {
     this.#element = this.#createElement(placeholder);
   }
 
+  static create(placeholder: string): Input {
+    return new Input(placeholder);
+  }
+
   #createElement(placeholder: string): HTMLDivElement {
     const el = document.createElement("div");
 

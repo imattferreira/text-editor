@@ -1,38 +1,30 @@
-import Node from "./nodes/node";
+import type { NodeRegister, JsonNode } from "./nodes/node";
 import Tree from "./tree/tree";
+import { Maybe } from "./utils/types";
 
 class EditorState {
   #tree: Tree;
-  #nodes: (typeof Node)[];
+  #registeredNodes: NodeRegister[];
 
-  constructor(nodes: (typeof Node)[]) {
+  constructor(registeredNodes: NodeRegister[]) {
     this.#tree = Tree.create();
-    this.#nodes = nodes;
+    this.#registeredNodes = registeredNodes;
   }
 
-  toHtml() {
-    return this.#tree.getRoot()?.getNode().toHtml();
+  static create(registeredNodes: NodeRegister[]): EditorState {
+    return new EditorState(registeredNodes);
   }
 
-  toJson() {
-    return this.#tree.getRoot()?.getNode().toJson();
+  toHtml(): Maybe<HTMLElement> {
+    return this.#tree.getRoot()?.getNode().toHtml() || null;
+  }
+
+  toJson(): Maybe<JsonNode> {
+    return this.#tree.getRoot()?.getNode().toJson() || null;
   }
 
   toText(): string {
-    const result: string[] = [];
-
-    for (const treeNode of this.#tree) {
-      // TODO: fix it
-      if (!treeNode) {
-        continue;
-      }
-
-      const text = treeNode.getNode().toText();
-
-      result.push(text);
-    }
-
-    return result.join(" ");
+    return this.#tree.getRoot()?.getNode().toText() || "";
   }
 
   fromHtml() {}

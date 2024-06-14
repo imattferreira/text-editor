@@ -8,7 +8,7 @@
  */
 import EditorState from "./editor-state";
 import Input from "./input";
-import Node from "./nodes/node";
+import type { NodeRegister } from "./nodes/node";
 
 interface Config {
   rootEl: () => HTMLElement;
@@ -34,8 +34,8 @@ class TextEditor {
       }
     }
 
-    this.#state = new EditorState(register.nodes as (typeof Node)[]);
-    this.#input = new Input(placeholder);
+    this.#state = EditorState.create(register.nodes as NodeRegister[]);
+    this.#input = Input.create(placeholder);
     this.#rootEl = rootEl;
   }
 
@@ -63,6 +63,14 @@ class TextEditor {
 
   render(): void {
     this.#rootEl.appendChild(this.#input.getElement());
+  }
+
+  onBlur(callback: () => void): void {
+    this.#input.getElement().addEventListener("blur", callback);
+  }
+
+  onFocus(callback: () => void): void {
+    this.#input.getElement().addEventListener("focus", callback);
   }
 }
 

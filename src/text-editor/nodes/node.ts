@@ -4,6 +4,8 @@ export interface JsonNode<T extends Record<string, unknown> = {}> {
   nodes: JsonNode[];
 }
 
+export type NodeRegister = typeof Node;
+
 abstract class Node<T extends Record<string, unknown> = {}> {
   protected data: T;
 
