@@ -31,5 +31,18 @@ function main() {
 
   // append text editor to the DOM
   textEditor.render();
+
+  // listen to input events
+  textEditor.onFocus(() => console.log("focused"));
+  textEditor.onBlur(() => console.log("blurred"));
+
+  // [WIP] export and content
+  textEditor.getState().toJson();
+  textEditor.getState().toText();
+  textEditor.getState().toHtml();
+
+  // [WIP] import content
+  textEditor.getState().fromJson(json);
+  textEditor.getState().fromHtml(dom);
 }
 ```
