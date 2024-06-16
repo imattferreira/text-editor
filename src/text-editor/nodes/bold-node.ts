@@ -29,6 +29,7 @@ class BoldNode extends Node<BoldNodeData> {
     const el = document.createElement("b");
     const text = document.createTextNode(this.data.text);
 
+    el.setAttribute("data-node-type", BoldNode.getType());
     el.appendChild(text);
 
     return el;

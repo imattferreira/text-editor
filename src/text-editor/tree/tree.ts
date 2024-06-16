@@ -1,4 +1,3 @@
-import TextNode from "../nodes/text-node";
 import type { Maybe } from "../utils/types";
 import TreeNode from "./tree-node";
 

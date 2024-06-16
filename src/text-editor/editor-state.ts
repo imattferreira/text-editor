@@ -1,5 +1,6 @@
 import type { NodeRegister, JsonNode } from "./nodes/node";
 import Tree from "./tree/tree";
+import TreeNode from "./tree/tree-node";
 import { Maybe } from "./utils/types";
 
 class EditorState {
@@ -36,9 +37,43 @@ class EditorState {
     throw new Error("methods not implemented yet!");
   }
 
-  fromHtml() {}
+  fromHtml(html: HTMLElement) {
+    const type = html.getAttribute("data-node-type");
 
-  fromJson() {}
+    if (!type) {
+      return;
+    }
+
+    const nodeType = this.#getNodeFromType(type);
+
+    if (!nodeType) {
+      return;
+    }
+
+    const transformed = nodeType.fromHtml(html);
+    const treeNode = TreeNode.create(transformed);
+
+    // TODO: how I can iterate over children to store and sync the tree?
+    this.#tree.append(treeNode);
+  }
+
+  fromJson(json: JsonNode) {
+    const nodeType = this.#getNodeFromType(json.type);
+
+    if (!nodeType) {
+      return;
+    }
+
+    const transformed = nodeType.fromJson(json);
+    const treeNode = TreeNode.create(transformed);
+
+    // TODO: how I can iterate over children to store and sync the tree?
+    this.#tree.append(treeNode);
+  }
+
+  #getNodeFromType(type: string): Maybe<NodeRegister> {
+    return this.#registeredNodes.find((n) => n.getType() === type) || null;
+  }
 
   cleanup() {
     this.#tree = Tree.create();

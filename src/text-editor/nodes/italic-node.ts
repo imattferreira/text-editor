@@ -29,6 +29,7 @@ class ItalicNode extends Node<ItalicNodeData> {
     const el = document.createElement("b");
     const text = document.createTextNode(this.data.text);
 
+    el.setAttribute("data-node-type", ItalicNode.getType());
     el.appendChild(text);
 
     return el;

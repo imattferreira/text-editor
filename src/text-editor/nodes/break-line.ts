@@ -22,7 +22,11 @@ class BreakLineNode extends Node {
   }
 
   toHtml(): HTMLElement {
-    return document.createElement("br");
+    const el = document.createElement("br");
+
+    el.setAttribute("data-node-type", BreakLineNode.getType());
+
+    return el;
   }
 
   toJson(): JsonNode {

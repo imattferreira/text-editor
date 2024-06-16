@@ -28,6 +28,8 @@ class ParagraphNode extends Node {
   toHtml(): HTMLElement {
     const el = document.createElement("p");
 
+    el.setAttribute("data-node-type", ParagraphNode.getType());
+
     for (const node of this.#nodes) {
       el.appendChild(node.toHtml());
     }

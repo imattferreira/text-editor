@@ -29,6 +29,7 @@ class TextNode extends Node<TextNodeData> {
     const el = document.createElement("span");
     const text = document.createTextNode(this.data.text);
 
+    el.setAttribute("data-node-type", TextNode.getType());
     el.appendChild(text);
 
     return el;
