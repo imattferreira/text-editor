@@ -17,7 +17,7 @@ class ParagraphNode extends Node {
     return new ParagraphNode();
   }
 
-  static fromHtml(_node: HTMLElement): Node {
+  static fromHtml(_node: Element): Node {
     return new ParagraphNode();
   }
 

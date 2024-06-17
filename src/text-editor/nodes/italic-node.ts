@@ -17,7 +17,7 @@ class ItalicNode extends Node<ItalicNodeData> {
     return ItalicNode.create(node.data.text);
   }
 
-  static fromHtml(node: HTMLElement): ItalicNode {
+  static fromHtml(node: Element): ItalicNode {
     return ItalicNode.create(node.childNodes[0].textContent || "");
   }
 

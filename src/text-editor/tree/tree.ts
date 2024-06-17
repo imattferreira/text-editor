@@ -2,6 +2,7 @@ import type { Maybe } from "../utils/types";
 import TreeNode from "./tree-node";
 
 class Tree {
+  // TODO: allow root be a array of nodes
   #root: Maybe<TreeNode>;
 
   constructor() {

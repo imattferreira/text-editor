@@ -17,7 +17,7 @@ class BoldNode extends Node<BoldNodeData> {
     return BoldNode.create(node.data.text);
   }
 
-  static fromHtml(node: HTMLElement): BoldNode {
+  static fromHtml(node: Element): BoldNode {
     return BoldNode.create(node.childNodes[0].textContent || "");
   }
 

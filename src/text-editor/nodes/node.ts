@@ -21,7 +21,7 @@ abstract class Node<T extends Record<string, unknown> = {}> {
     throw new Error("[node] method `fromJson` should be override");
   }
 
-  static fromHtml(_node: HTMLElement): Node {
+  static fromHtml(_node: Element): Node {
     throw new Error("[node] method `fromHtml` should be override");
   }
 

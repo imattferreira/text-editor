@@ -37,38 +37,56 @@ class EditorState {
     throw new Error("methods not implemented yet!");
   }
 
-  fromHtml(html: HTMLElement) {
-    const type = html.getAttribute("data-node-type");
+  fromHtml(html: Element[]) {
+    const traverse = (htmlNode: Element, parentKey: string) => {
+      const type = htmlNode.getAttribute("data-node-type");
 
-    if (!type) {
-      return;
+      if (!type) {
+        return;
+      }
+
+      const nodeType = this.#getNodeFromType(type);
+
+      if (!nodeType) {
+        return;
+      }
+
+      const transformed = nodeType.fromHtml(htmlNode);
+      const treeNode = TreeNode.create(transformed);
+
+      this.#tree.append(treeNode, parentKey);
+
+      for (const child of htmlNode.children) {
+        traverse(child, treeNode.getKey());
+      }
+    };
+
+    for (const htmlNode of html) {
+      traverse(htmlNode, this.#tree.getRoot().getKey());
     }
-
-    const nodeType = this.#getNodeFromType(type);
-
-    if (!nodeType) {
-      return;
-    }
-
-    const transformed = nodeType.fromHtml(html);
-    const treeNode = TreeNode.create(transformed);
-
-    // TODO: how I can iterate over children to store and sync the tree?
-    this.#tree.append(treeNode);
   }
 
-  fromJson(json: JsonNode) {
-    const nodeType = this.#getNodeFromType(json.type);
+  fromJson(json: JsonNode[]) {
+    const traverse = (jsonNode: JsonNode, parentKey: string) => {
+      const nodeType = this.#getNodeFromType(jsonNode.type);
 
-    if (!nodeType) {
-      return;
+      if (!nodeType) {
+        return;
+      }
+
+      const transformed = nodeType.fromJson(jsonNode);
+      const treeNode = TreeNode.create(transformed);
+
+      this.#tree.append(treeNode, parentKey);
+
+      for (const child of jsonNode.nodes) {
+        traverse(child, treeNode.getKey());
+      }
+    };
+
+    for (const jsonNode of json) {
+      traverse(jsonNode, this.#tree.getRoot().getKey());
     }
-
-    const transformed = nodeType.fromJson(json);
-    const treeNode = TreeNode.create(transformed);
-
-    // TODO: how I can iterate over children to store and sync the tree?
-    this.#tree.append(treeNode);
   }
 
   #getNodeFromType(type: string): Maybe<NodeRegister> {

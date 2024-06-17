@@ -42,7 +42,7 @@ function main() {
   textEditor.onFocus(() => console.log("focused"));
   textEditor.onBlur(() => console.log("blurred"));
 
-  // [WIP] export and content
+  // [WIP] export content
   textEditor.getState().toJson();
   textEditor.getState().toText();
   textEditor.getState().toHtml();

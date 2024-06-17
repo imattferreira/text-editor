@@ -17,7 +17,7 @@ class TextNode extends Node<TextNodeData> {
     return TextNode.create(node.data.text);
   }
 
-  static fromHtml(node: HTMLElement): TextNode {
+  static fromHtml(node: Element): TextNode {
     return TextNode.create(node.childNodes[0].textContent || "");
   }
 
