@@ -1,13 +1,9 @@
 import EditorState from "./editor-state";
 import Input from "./input";
-import type { NodeRegister } from "./nodes/node";
 
 interface Config {
   rootEl: () => HTMLElement;
   placeholder: string;
-  register: {
-    nodes: unknown[];
-  };
 }
 
 class TextEditor {
@@ -15,38 +11,14 @@ class TextEditor {
   #rootEl: HTMLElement;
   #input: Input;
 
-  constructor(
-    rootEl: HTMLElement,
-    placeholder: string,
-    register: Pick<Config, "register">["register"]
-  ) {
-    for (const node of register.nodes) {
-      if (!this.#isNodeValid(node)) {
-        throw new Error("was registered a invalid node");
-      }
-    }
-
-    this.#state = EditorState.create(register.nodes as NodeRegister[]);
+  constructor(rootEl: HTMLElement, placeholder: string) {
+    this.#state = EditorState.create();
     this.#input = Input.create(placeholder);
     this.#rootEl = rootEl;
   }
 
-  static create({ placeholder, rootEl, register }: Config) {
-    return new TextEditor(rootEl(), placeholder, register);
-  }
-
-  #isNodeValid(node: unknown): boolean {
-    const props = ["getType", "fromJson", "fromHtml"];
-
-    for (const prop of props) {
-      if (prop in (node as object)) {
-        continue;
-      }
-
-      return false;
-    }
-
-    return true;
+  static create({ placeholder, rootEl }: Config) {
+    return new TextEditor(rootEl(), placeholder);
   }
 
   getState(): EditorState {

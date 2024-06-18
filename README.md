@@ -22,9 +22,6 @@ import "./text-editor/styles.css";
 function main() {
   const config = {
     placeholder: "This is my placeholder!", // placeholder of input
-    register: {
-      nodes: [TextNode, BreakLineNode], // register nodes that can be used internally
-    },
     rootEl: () => document.querySelector(".text-editor__wrapper"), // selects witch element will be the wrapper of text editor when rendered
   };
   const textEditor = TextEditor.create(config);

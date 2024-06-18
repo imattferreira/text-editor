@@ -15,9 +15,6 @@ import "./text-editor/styles.css";
 function main() {
   const textEditor = TextEditor.create({
     placeholder: "placeholder",
-    register: {
-      nodes: [TextNode, BreakLineNode, ParagraphNode],
-    },
     rootEl: () => document.querySelector("body")!,
   });
 

@@ -1,21 +1,22 @@
-import type { NodeRegister, JsonNode } from "./nodes/node";
+import type { JsonNode } from "./nodes/node";
 import Node from "./nodes/node";
 import Tree from "./tree/tree";
 import TreeNode from "./tree/tree-node";
+import {
+  extractEditorNodeTypeAttr,
+  findEditorNodeFromType,
+} from "./utils/node";
 import { Maybe } from "./utils/types";
 
 class EditorState {
   #tree: Tree;
-  // TODO: store only the active node (?!)
-  #registeredNodes: NodeRegister[];
 
-  constructor(registeredNodes: NodeRegister[]) {
+  constructor() {
     this.#tree = Tree.create();
-    this.#registeredNodes = registeredNodes;
   }
 
-  static create(registeredNodes: NodeRegister[]): EditorState {
-    return new EditorState(registeredNodes);
+  static create(): EditorState {
+    return new EditorState();
   }
 
   toHtml(): HTMLCollection {
@@ -40,13 +41,13 @@ class EditorState {
 
   fromHtml(html: Document) {
     const traverse = (htmlNode: Element): Maybe<Node> => {
-      const editorNodeTypeAttr = htmlNode.getAttribute("data-node-type");
+      const editorNodeTypeAttr = extractEditorNodeTypeAttr(htmlNode);
 
       if (!editorNodeTypeAttr) {
         return null;
       }
 
-      const EditorNode = this.#getNodeFromType(editorNodeTypeAttr);
+      const EditorNode = findEditorNodeFromType(editorNodeTypeAttr);
 
       if (!EditorNode) {
         return null;
@@ -131,10 +132,6 @@ class EditorState {
     for (const jsonNode of json) {
       traverse(jsonNode, this.#tree.getRoot().getKey());
     }
-  }
-
-  #getNodeFromType(type: string): Maybe<NodeRegister> {
-    return this.#registeredNodes.find((n) => n.getType() === type) || null;
   }
 
   cleanup() {
