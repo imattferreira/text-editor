@@ -4,25 +4,29 @@ import Node, { JsonNode } from "./node";
 class ParagraphNode extends Node {
   #nodes: Node[];
 
-  constructor() {
+  constructor(children: Node[]) {
     super({});
-    this.#nodes = [];
+    this.#nodes = children;
   }
 
   static getType(): string {
     return "paragraph";
   }
 
-  static fromJson(_node: JsonNode): Node {
-    return new ParagraphNode();
+  static fromJson(node: JsonNode): Node {
+    const children: Node[] = [];
+    for (const child of node.nodes) {
+      // child
+    }
+    return new ParagraphNode(children);
   }
 
   static fromHtml(_node: Element): Node {
-    return new ParagraphNode();
+    return new ParagraphNode([]);
   }
 
   static create() {
-    return new ParagraphNode();
+    return new ParagraphNode([]);
   }
 
   toHtml(): HTMLElement {

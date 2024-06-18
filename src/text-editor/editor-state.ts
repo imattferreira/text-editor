@@ -1,4 +1,5 @@
 import type { NodeRegister, JsonNode } from "./nodes/node";
+import Node from "./nodes/node";
 import Tree from "./tree/tree";
 import TreeNode from "./tree/tree-node";
 import { Maybe } from "./utils/types";
@@ -37,8 +38,49 @@ class EditorState {
     throw new Error("methods not implemented yet!");
   }
 
+  fromHtml(html: Document) {
+    const traverse = (htmlNode: Element): Maybe<Node> => {
+      const editorNodeTypeAttr = htmlNode.getAttribute("data-node-type");
+
+      if (!editorNodeTypeAttr) {
+        return null;
+      }
+
+      const EditorNode = this.#getNodeFromType(editorNodeTypeAttr);
+
+      if (!EditorNode) {
+        return null;
+      }
+
+      const transformed = EditorNode.fromHtml(htmlNode);
+
+      for (const child of htmlNode.children) {
+        const transformedChild = traverse(child);
+
+        if (!transformedChild) {
+          continue;
+        }
+
+        // TODO: change it
+        transformed.setChild(transformedChild);
+      }
+
+      return transformed;
+    };
+
+    for (const htmlNode of html.body.children) {
+      const child = traverse(htmlNode);
+
+      if (!child) {
+        continue;
+      }
+
+      this.#tree.getRoot().setChild(TreeNode.create(child));
+    }
+  }
+
   // TODO: rewrite it completely?
-  fromHtml(html: Element[]) {
+  _fromHtml(html: Element[]) {
     const traverse = (htmlNode: Element, parentKey: string) => {
       const type = htmlNode.getAttribute("data-node-type");
 
@@ -67,6 +109,7 @@ class EditorState {
     }
   }
 
+  // TODO: rewrite it completely?
   fromJson(json: JsonNode[]) {
     const traverse = (jsonNode: JsonNode, parentKey: string) => {
       const nodeType = this.#getNodeFromType(jsonNode.type);

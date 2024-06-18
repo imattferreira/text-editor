@@ -30,6 +30,8 @@ abstract class Node<T extends Record<string, unknown> = {}> {
   abstract toJson(): JsonNode;
 
   abstract toText(): string;
+
+  // abstract setChild(node: Node): void;
 }
 
 export default Node;
