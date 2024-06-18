@@ -1,19 +1,19 @@
 import type { Maybe } from "../utils/types";
-import TreeNode from "./tree-node";
+import TreeNode, { type ITreeNode } from "./tree-node";
+import TreeRootNode from "./tree-root-node";
 
 class Tree {
-  // TODO: allow root be a array of nodes
-  #root: Maybe<TreeNode>;
+  #root: TreeRootNode;
 
   constructor() {
-    this.#root = null;
+    this.#root = TreeRootNode.create();
   }
 
   static create(): Tree {
     return new Tree();
   }
 
-  getRoot(): Maybe<TreeNode> {
+  getRoot(): TreeRootNode {
     return this.#root;
   }
 
@@ -22,13 +22,9 @@ class Tree {
   append(node: TreeNode, parentKey: string): void;
 
   append(node: TreeNode, parentKey?: string): void {
-    if (!this.#root) {
-      this.#root = node;
-      return;
-    }
-
     if (!parentKey) {
-      throw new Error("`parentKey` should be provided");
+      this.#root.setChild(node);
+      return;
     }
 
     const parent = this.#find(parentKey);
@@ -40,19 +36,15 @@ class Tree {
     parent.setChild(node);
   }
 
-  #find(key: string): Maybe<TreeNode> {
-    if (!this.#root) {
-      return null;
-    }
-
-    if (this.#root.getKey() === key) {
+  #find(key: string): Maybe<ITreeNode> {
+    if (key === this.#root.getKey()) {
       return this.#root;
     }
 
     let founded = false;
     let target = null;
 
-    function traverse(currNode: TreeNode) {
+    function traverse(currNode: ITreeNode) {
       for (const child of currNode.getChildren()) {
         if (founded) {
           break;
@@ -74,7 +66,7 @@ class Tree {
   }
 
   [Symbol.iterator]() {
-    const stack = [this.#root];
+    const stack: ITreeNode[] = [this.#root];
 
     return {
       next() {

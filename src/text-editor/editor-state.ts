@@ -17,16 +17,16 @@ class EditorState {
     return new EditorState(registeredNodes);
   }
 
-  toHtml(): Maybe<HTMLElement> {
-    return this.#tree.getRoot()?.getNode().toHtml() || null;
+  toHtml(): HTMLCollection {
+    return this.#tree.getRoot().toHtml();
   }
 
-  toJson(): Maybe<JsonNode> {
-    return this.#tree.getRoot()?.getNode().toJson() || null;
+  toJson(): JsonNode[] {
+    return this.#tree.getRoot().toJson();
   }
 
   toText(): string {
-    return this.#tree.getRoot()?.getNode().toText() || "";
+    return this.#tree.getRoot().toText();
   }
 
   insert(_node: Node): void {
@@ -37,6 +37,7 @@ class EditorState {
     throw new Error("methods not implemented yet!");
   }
 
+  // TODO: rewrite it completely?
   fromHtml(html: Element[]) {
     const traverse = (htmlNode: Element, parentKey: string) => {
       const type = htmlNode.getAttribute("data-node-type");

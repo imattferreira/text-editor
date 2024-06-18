@@ -36,8 +36,11 @@ function main() {
   // textEditor.getState().toText();
 
   // WIP
+  // const parser = new DOMParser();
+  // const dom = parser.parseFromString("", "text/html");
+  // textEditor.getState().fromHtml(dom);
+
   // textEditor.getState().fromJson();
-  // textEditor.getState().fromHtml();
 }
 
 main();

@@ -2,7 +2,16 @@ import Node from "../nodes/node";
 import type { Maybe } from "../utils/types";
 import TreeNodeChildren from "./tree-node-children";
 
-class TreeNode {
+// TODO: move to own file
+export interface ITreeNode {
+  getKey(): string;
+  getParent(): Maybe<TreeNode>;
+  setParent(parentNode: TreeNode): void;
+  getChildren(): TreeNodeChildren;
+  setChild(node: TreeNode): void;
+}
+
+class TreeNode implements ITreeNode {
   #key;
   #node: Node;
   #parent: Maybe<TreeNode>;

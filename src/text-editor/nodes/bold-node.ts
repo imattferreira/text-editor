@@ -1,28 +1,25 @@
 import Node, { JsonNode } from "./node";
+import TextNode from "./text-node";
 
-type BoldNodeData = {
-  text: string;
-};
-
-class BoldNode extends Node<BoldNodeData> {
-  constructor(text: string) {
-    super({ text });
+class BoldNode extends Node {
+  constructor(children: TextNode[]) {
+    super({});
   }
 
   static getType(): string {
     return "bold";
   }
 
-  static fromJson(node: JsonNode<BoldNodeData>): BoldNode {
-    return BoldNode.create(node.data.text);
+  static fromJson(children: TextNode[]): BoldNode {
+    return BoldNode.create(children);
   }
 
   static fromHtml(node: Element): BoldNode {
     return BoldNode.create(node.childNodes[0].textContent || "");
   }
 
-  static create(text: string): BoldNode {
-    return new BoldNode(text);
+  static create(children: TextNode[]): BoldNode {
+    return new BoldNode(children);
   }
 
   toHtml(): HTMLElement {
