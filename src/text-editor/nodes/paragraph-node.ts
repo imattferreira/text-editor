@@ -1,6 +1,9 @@
+import {
+  extractEditorNodeTypeAttr,
+  findEditorNodeFromType,
+} from "../utils/node";
 import Node, { JsonNode } from "./node";
 
-// Paragraph will be is a wrapper of text nodes
 class ParagraphNode extends Node {
   #nodes: Node[];
 
@@ -13,44 +16,70 @@ class ParagraphNode extends Node {
     return "paragraph";
   }
 
-  static fromJson(node: JsonNode): Node {
-    const children: Node[] = [];
-    for (const child of node.nodes) {
-      // child
+  static fromJson(json: JsonNode): Node {
+    const children = [];
+
+    for (const child of json.nodes) {
+      const EditorNode = findEditorNodeFromType(child.type);
+
+      if (!EditorNode) {
+        continue;
+      }
+
+      children.push(EditorNode.fromJson(child as any));
     }
+
+    return ParagraphNode.create(children);
+  }
+
+  static fromHtml(node: Element): Node {
+    const children = [];
+
+    for (const child of node.children) {
+      const editorNodeTypeAttr = extractEditorNodeTypeAttr(child);
+
+      if (!editorNodeTypeAttr) {
+        continue;
+      }
+
+      const EditorNode = findEditorNodeFromType(editorNodeTypeAttr);
+
+      if (!EditorNode) {
+        continue;
+      }
+
+      children.push(EditorNode.fromHtml(child));
+    }
+
+    return ParagraphNode.create(children);
+  }
+
+  static create(children: Node[]) {
     return new ParagraphNode(children);
-  }
-
-  static fromHtml(_node: Element): Node {
-    return new ParagraphNode([]);
-  }
-
-  static create() {
-    return new ParagraphNode([]);
   }
 
   toHtml(): HTMLElement {
     const el = document.createElement("p");
 
-    el.setAttribute("data-node-type", ParagraphNode.getType());
-
-    for (const node of this.#nodes) {
-      el.appendChild(node.toHtml());
+    for (const child of this.#nodes) {
+      el.appendChild(child.toHtml() as Element);
     }
+
+    el.setAttribute("data-node-type", ParagraphNode.getType());
 
     return el;
   }
 
   toJson(): JsonNode {
-    const nodes = [];
+    const children = [];
 
     for (const node of this.#nodes) {
-      nodes.push(node.toJson());
+      children.push(node.toJson());
     }
 
     return {
       type: ParagraphNode.getType(),
-      nodes,
+      nodes: children,
       data: {},
     };
   }
@@ -58,8 +87,8 @@ class ParagraphNode extends Node {
   toText(): string {
     let result = [];
 
-    for (const node of this.#nodes) {
-      result.push(node.toText());
+    for (const child of this.#nodes) {
+      result.push(child.toText());
     }
 
     return result.join("");
