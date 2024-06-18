@@ -1,52 +1,97 @@
+import {
+  extractEditorNodeTypeAttr,
+  findEditorNodeFromType,
+} from "../utils/node";
 import Node, { JsonNode } from "./node";
 
-type ItalicNodeData = {
-  text: string;
-};
+class ItalicNode extends Node {
+  #nodes: Node[];
 
-class ItalicNode extends Node<ItalicNodeData> {
-  constructor(text: string) {
-    super({ text });
+  constructor(children: Node[]) {
+    super({});
+    this.#nodes = children;
   }
 
   static getType(): string {
     return "italic";
   }
 
-  static fromJson(node: JsonNode<ItalicNodeData>): ItalicNode {
-    return ItalicNode.create(node.data.text);
+  static fromJson(json: JsonNode): ItalicNode {
+    const children = [];
+
+    for (const child of json.nodes) {
+      const EditorNode = findEditorNodeFromType(child.type);
+
+      if (!EditorNode) {
+        continue;
+      }
+
+      children.push(EditorNode.fromJson(child as any));
+    }
+
+    return ItalicNode.create(children);
   }
 
   static fromHtml(node: Element): ItalicNode {
-    return ItalicNode.create(node.childNodes[0].textContent || "");
+    const children = [];
+
+    for (const child of node.children) {
+      const editorNodeTypeAttr = extractEditorNodeTypeAttr(child);
+
+      if (!editorNodeTypeAttr) {
+        continue;
+      }
+
+      const EditorNode = findEditorNodeFromType(editorNodeTypeAttr);
+
+      if (!EditorNode) {
+        continue;
+      }
+
+      children.push(EditorNode.fromHtml(child));
+    }
+
+    return ItalicNode.create(children);
   }
 
-  static create(text: string): ItalicNode {
-    return new ItalicNode(text);
+  static create(children: Node[]): ItalicNode {
+    return new ItalicNode(children);
   }
 
   toHtml(): HTMLElement {
     const el = document.createElement("b");
-    const text = document.createTextNode(this.data.text);
+
+    for (const child of this.#nodes) {
+      el.appendChild(child.toHtml() as Element);
+    }
 
     el.setAttribute("data-node-type", ItalicNode.getType());
-    el.appendChild(text);
 
     return el;
   }
 
   toJson(): JsonNode {
+    const children = [];
+
+    for (const child of this.#nodes) {
+      children.push(child.toJson());
+    }
+
     return {
       type: ItalicNode.getType(),
-      nodes: [],
-      data: {
-        text: this.data.text,
-      },
+      nodes: children,
+      data: {},
     };
   }
 
   toText(): string {
-    return this.data.text;
+    const texts = [];
+
+    for (const child of this.#nodes) {
+      texts.push(child.toText());
+    }
+
+    return texts.join("");
   }
 }
 

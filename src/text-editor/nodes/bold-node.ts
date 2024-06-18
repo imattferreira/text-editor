@@ -26,7 +26,7 @@ class BoldNode extends Node {
         continue;
       }
 
-      children.push(EditorNode.fromJson(child));
+      children.push(EditorNode.fromJson(child as any));
     }
 
     return BoldNode.create(children);
