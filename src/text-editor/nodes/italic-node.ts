@@ -4,7 +4,7 @@ import {
 } from "../utils/node";
 import Node, { JsonNode } from "./node";
 
-class ItalicNode extends Node {
+class ItalicNode extends Node<{}, HTMLElement, JsonNode> {
   #nodes: Node[];
 
   constructor(children: Node[]) {
@@ -92,6 +92,14 @@ class ItalicNode extends Node {
     }
 
     return texts.join("");
+  }
+
+  setChild(node: Node) {
+    this.#nodes.push(node);
+  }
+
+  getChildren(): Node[] {
+    return this.#nodes;
   }
 }
 

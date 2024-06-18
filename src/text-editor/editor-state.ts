@@ -1,7 +1,5 @@
-import type { JsonNode } from "./nodes/node";
-import Node from "./nodes/node";
-import Tree from "./tree/tree";
-import TreeNode from "./tree/tree-node";
+import Node, { type JsonNode } from "./nodes/node";
+import Tree from "./tree";
 import {
   extractEditorNodeTypeAttr,
   findEditorNodeFromType,
@@ -76,61 +74,41 @@ class EditorState {
         continue;
       }
 
-      this.#tree.getRoot().setChild(TreeNode.create(child));
+      this.#tree.getRoot().setChild(child);
     }
   }
 
-  // TODO: rewrite it completely?
-  _fromHtml(html: Element[]) {
-    const traverse = (htmlNode: Element, parentKey: string) => {
-      const type = htmlNode.getAttribute("data-node-type");
-
-      if (!type) {
-        return;
-      }
-
-      const nodeType = this.#getNodeFromType(type);
-
-      if (!nodeType) {
-        return;
-      }
-
-      const transformed = nodeType.fromHtml(htmlNode);
-      const treeNode = TreeNode.create(transformed);
-
-      this.#tree.append(treeNode, parentKey);
-
-      for (const child of htmlNode.children) {
-        traverse(child, treeNode.getKey());
-      }
-    };
-
-    for (const htmlNode of html) {
-      traverse(htmlNode, this.#tree.getRoot().getKey());
-    }
-  }
-
-  // TODO: rewrite it completely?
   fromJson(json: JsonNode[]) {
-    const traverse = (jsonNode: JsonNode, parentKey: string) => {
-      const nodeType = this.#getNodeFromType(jsonNode.type);
+    const traverse = (jsonNode: JsonNode): Maybe<Node> => {
+      const EditorNode = findEditorNodeFromType(jsonNode.type);
 
-      if (!nodeType) {
-        return;
+      if (!EditorNode) {
+        return null;
       }
 
-      const transformed = nodeType.fromJson(jsonNode);
-      const treeNode = TreeNode.create(transformed);
-
-      this.#tree.append(treeNode, parentKey);
+      const transformed = EditorNode.fromHtml(jsonNode as any);
 
       for (const child of jsonNode.nodes) {
-        traverse(child, treeNode.getKey());
+        const transformedChild = traverse(child);
+
+        if (!transformedChild) {
+          continue;
+        }
+
+        transformed.setChild(transformedChild);
       }
+
+      return transformed;
     };
 
-    for (const jsonNode of json) {
-      traverse(jsonNode, this.#tree.getRoot().getKey());
+    for (const node of json) {
+      const child = traverse(node);
+
+      if (!child) {
+        continue;
+      }
+
+      this.#tree.getRoot().setChild(child);
     }
   }
 

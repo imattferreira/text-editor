@@ -1,6 +1,6 @@
 import Node, { JsonNode } from "./node";
 
-class BreakLineNode extends Node {
+class BreakLineNode extends Node<{}, HTMLElement, JsonNode> {
   constructor() {
     super({});
   }
@@ -39,6 +39,12 @@ class BreakLineNode extends Node {
 
   toText(): string {
     return "\n";
+  }
+
+  setChild(_node: Node) {}
+
+  getChildren(): Node[] {
+    return [];
   }
 }
 

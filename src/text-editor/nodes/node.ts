@@ -6,10 +6,16 @@ export interface JsonNode<T extends Record<string, unknown> = {}> {
 
 export type NodeRegister = typeof Node;
 
-abstract class Node<T extends Record<string, unknown> = {}, H = unknown> {
+abstract class Node<
+  T extends Record<string, unknown> = {},
+  H = unknown,
+  J = JsonNode
+> {
   protected data: T;
+  #key: string;
 
-  constructor(data: T) {
+  constructor(data: T, key?: string) {
+    this.#key = key || crypto.randomUUID();
     this.data = data;
   }
 
@@ -25,9 +31,19 @@ abstract class Node<T extends Record<string, unknown> = {}, H = unknown> {
     throw new Error("[node] method `fromHtml` should be override");
   }
 
+  getKey(): string {
+    return this.#key;
+  }
+
+  // getParent(): void;
+  // setParent(): void;
+  abstract setChild(node: Node): void;
+
+  abstract getChildren(): Node[];
+
   abstract toHtml(): H;
 
-  abstract toJson(): JsonNode;
+  abstract toJson(): J;
 
   abstract toText(): string;
 }

@@ -4,7 +4,7 @@ import {
 } from "../utils/node";
 import Node, { JsonNode } from "./node";
 
-class BoldNode extends Node {
+class BoldNode extends Node<{}, HTMLElement, JsonNode> {
   #nodes: Node[];
 
   constructor(children: Node[]) {
@@ -58,7 +58,7 @@ class BoldNode extends Node {
     return new BoldNode(children);
   }
 
-  toHtml(): HTMLElement {
+  toHtml() {
     const el = document.createElement("b");
 
     for (const child of this.#nodes) {
@@ -70,7 +70,7 @@ class BoldNode extends Node {
     return el;
   }
 
-  toJson(): JsonNode {
+  toJson() {
     const children = [];
 
     for (const child of this.#nodes) {
@@ -92,6 +92,14 @@ class BoldNode extends Node {
     }
 
     return texts.join("");
+  }
+
+  setChild(node: Node) {
+    this.#nodes.push(node);
+  }
+
+  getChildren(): Node[] {
+    return this.#nodes;
   }
 }
 
