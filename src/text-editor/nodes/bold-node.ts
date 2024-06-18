@@ -1,49 +1,97 @@
+import {
+  extractEditorNodeTypeAttr,
+  findEditorNodeFromType,
+} from "../utils/node";
 import Node, { JsonNode } from "./node";
-import TextNode from "./text-node";
 
 class BoldNode extends Node {
-  constructor(children: TextNode[]) {
+  #nodes: Node[];
+
+  constructor(children: Node[]) {
     super({});
+    this.#nodes = children;
   }
 
   static getType(): string {
     return "bold";
   }
 
-  static fromJson(children: TextNode[]): BoldNode {
+  static fromJson(json: JsonNode): BoldNode {
+    const children = [];
+
+    for (const child of json.nodes) {
+      const EditorNode = findEditorNodeFromType(child.type);
+
+      if (!EditorNode) {
+        continue;
+      }
+
+      children.push(EditorNode.fromJson(child));
+    }
+
     return BoldNode.create(children);
   }
 
   static fromHtml(node: Element): BoldNode {
-    return BoldNode.create(node.childNodes[0].textContent || "");
+    const children = [];
+
+    for (const child of node.children) {
+      const editorNodeTypeAttr = extractEditorNodeTypeAttr(child);
+
+      if (!editorNodeTypeAttr) {
+        continue;
+      }
+
+      const EditorNode = findEditorNodeFromType(editorNodeTypeAttr);
+
+      if (!EditorNode) {
+        continue;
+      }
+
+      children.push(EditorNode.fromHtml(child));
+    }
+
+    return BoldNode.create(children);
   }
 
-  static create(children: TextNode[]): BoldNode {
+  static create(children: Node[]): BoldNode {
     return new BoldNode(children);
   }
 
   toHtml(): HTMLElement {
     const el = document.createElement("b");
-    const text = document.createTextNode(this.data.text);
+
+    for (const child of this.#nodes) {
+      el.appendChild(child.toHtml() as Element);
+    }
 
     el.setAttribute("data-node-type", BoldNode.getType());
-    el.appendChild(text);
 
     return el;
   }
 
   toJson(): JsonNode {
+    const children = [];
+
+    for (const child of this.#nodes) {
+      children.push(child.toJson());
+    }
+
     return {
       type: BoldNode.getType(),
-      nodes: [],
-      data: {
-        text: this.data.text,
-      },
+      nodes: children,
+      data: {},
     };
   }
 
   toText(): string {
-    return this.data.text;
+    const texts = [];
+
+    for (const child of this.#nodes) {
+      texts.push(child.toText());
+    }
+
+    return texts.join("");
   }
 }
 
