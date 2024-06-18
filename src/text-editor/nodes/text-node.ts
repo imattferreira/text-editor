@@ -4,7 +4,7 @@ type TextNodeData = {
   text: string;
 };
 
-class TextNode extends Node<TextNodeData> {
+class TextNode extends Node<TextNodeData, Text> {
   constructor(text: string) {
     super({ text });
   }
@@ -25,14 +25,8 @@ class TextNode extends Node<TextNodeData> {
     return new TextNode(text);
   }
 
-  toHtml(): HTMLElement {
-    const el = document.createElement("span");
-    const text = document.createTextNode(this.data.text);
-
-    el.setAttribute("data-node-type", TextNode.getType());
-    el.appendChild(text);
-
-    return el;
+  toHtml() {
+    return document.createTextNode(this.data.text);
   }
 
   toJson(): JsonNode {
