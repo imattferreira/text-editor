@@ -45,7 +45,7 @@ function main() {
   textEditor.getState().toHtml();
 
   // import content
-  textEditor.getState().fromJson(json);
-  textEditor.getState().fromHtml(dom);
+  textEditor.fromJson(json);
+  textEditor.fromHtml(dom);
 }
 ```

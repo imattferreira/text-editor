@@ -30,19 +30,17 @@ function main() {
   // textEditor.getState().toHtml();
   // textEditor.getState().toText();
 
-  // const parser = new DOMParser();
-  // const dom = parser.parseFromString(
-  //   `<p data-node-type="paragraph">Hello Text Editor!!! <b data-node-type="bold">msg</b></p>`,
-  //   "text/html"
-  // );
-  // textEditor.getState().fromHtml(dom);
-  // textEditor.sync();
+  const parser = new DOMParser();
+  const dom = parser.parseFromString(
+    `<p data-node-type="paragraph">Hello Text Editor!!! <b data-node-type="bold">msg</b></p>`,
+    "text/html"
+  );
+  textEditor.fromHtml(dom);
 
   // const json = JSON.parse(
   //   '[{"type":"paragraph","data":{},"nodes":[{"type":"text","data":{"text":"hello text-editor"},"nodes":[]},{"type":"bold","data":{},"nodes":[{"type":"text","data":{"text":"!!!"},"nodes":[]}]}]}]'
   // );
-  // textEditor.getState().fromJson(json);
-  // textEditor.sync();
+  // textEditor.fromJson(json);
 }
 
 main();

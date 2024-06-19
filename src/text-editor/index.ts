@@ -1,5 +1,6 @@
 import EditorState from "./editor-state";
 import Input from "./input";
+import type { JsonNode } from "./nodes/node";
 
 interface Config {
   rootEl: () => HTMLElement;
@@ -29,7 +30,13 @@ class TextEditor {
     this.#rootEl.appendChild(this.#input.getElement());
   }
 
-  sync() {
+  fromHtml(html: Document): void {
+    this.#state.fromHtml(html);
+    this.#input.sync(this.#state.toHtml());
+  }
+
+  fromJson(json: JsonNode[]): void {
+    this.#state.fromJson(json);
     this.#input.sync(this.#state.toHtml());
   }
 
