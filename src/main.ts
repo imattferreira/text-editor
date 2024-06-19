@@ -26,12 +26,10 @@ function main() {
   // textEditor.getState().insert(node);
   // textEditor.getState().insertAtPosition(node, 10);
 
-  // WIP
   // textEditor.getState().toJson();
   // textEditor.getState().toHtml();
   // textEditor.getState().toText();
 
-  // WIP
   // const parser = new DOMParser();
   // const dom = parser.parseFromString(
   //   `<p data-node-type="paragraph">Hello Text Editor!!! <b data-node-type="bold">msg</b></p>`,
@@ -40,7 +38,6 @@ function main() {
   // textEditor.getState().fromHtml(dom);
   // textEditor.sync();
 
-  // WIP
   // const json = JSON.parse(
   //   '[{"type":"paragraph","data":{},"nodes":[{"type":"text","data":{"text":"hello text-editor"},"nodes":[]},{"type":"bold","data":{},"nodes":[{"type":"text","data":{"text":"!!!"},"nodes":[]}]}]}]'
   // );
