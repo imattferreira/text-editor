@@ -13,8 +13,8 @@ class TextNode extends Node<TextNodeData, Text> {
     return "text";
   }
 
-  static fromJson(node: JsonNode<TextNodeData>): TextNode {
-    return TextNode.create(node.data.text);
+  static fromJson(json: JsonNode<TextNodeData>): TextNode {
+    return TextNode.create(json.data.text);
   }
 
   static fromHtml(node: Element): TextNode {

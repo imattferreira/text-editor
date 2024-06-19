@@ -1,4 +1,3 @@
-import { findEditorNodeFromType } from "../utils/node";
 import Node, { JsonNode } from "./node";
 
 class ItalicNode extends Node<{}, HTMLElement, JsonNode> {
@@ -13,20 +12,8 @@ class ItalicNode extends Node<{}, HTMLElement, JsonNode> {
     return "italic";
   }
 
-  static fromJson(json: JsonNode): ItalicNode {
-    const children = [];
-
-    for (const child of json.nodes) {
-      const EditorNode = findEditorNodeFromType(child.type);
-
-      if (!EditorNode) {
-        continue;
-      }
-
-      children.push(EditorNode.fromJson(child as any));
-    }
-
-    return ItalicNode.create(children);
+  static fromJson(_json: JsonNode): ItalicNode {
+    return ItalicNode.create([]);
   }
 
   static fromHtml(_node: Element): ItalicNode {

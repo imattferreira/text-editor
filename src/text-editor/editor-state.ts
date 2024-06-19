@@ -90,7 +90,7 @@ class EditorState {
         return null;
       }
 
-      const transformed = EditorNode.fromHtml(jsonNode as any);
+      const transformed = EditorNode.fromJson(jsonNode as any);
 
       for (const child of jsonNode.nodes) {
         const transformedChild = traverse(child);
