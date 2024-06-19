@@ -29,6 +29,10 @@ class TextEditor {
     this.#rootEl.appendChild(this.#input.getElement());
   }
 
+  sync() {
+    this.#input.sync(this.#state.toHtml());
+  }
+
   onBlur(callback: () => void): void {
     this.#input.getElement().addEventListener("blur", callback);
   }

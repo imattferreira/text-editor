@@ -1,4 +1,5 @@
 import Node, { type JsonNode } from "./nodes/node";
+import TextNode from "./nodes/text-node";
 import Tree from "./tree";
 import {
   extractEditorNodeTypeAttr,
@@ -38,7 +39,12 @@ class EditorState {
   }
 
   fromHtml(html: Document) {
-    const traverse = (htmlNode: Element): Maybe<Node> => {
+    const traverse = (htmlNode: ChildNode): Maybe<Node> => {
+      console.log(htmlNode);
+      if (htmlNode.nodeType === globalThis.Node.TEXT_NODE) {
+        return TextNode.fromHtml(htmlNode as Element);
+      }
+
       const editorNodeTypeAttr = extractEditorNodeTypeAttr(htmlNode);
 
       if (!editorNodeTypeAttr) {
@@ -51,9 +57,9 @@ class EditorState {
         return null;
       }
 
-      const transformed = EditorNode.fromHtml(htmlNode);
+      const transformed = EditorNode.fromHtml(htmlNode as Element);
 
-      for (const child of htmlNode.children) {
+      for (const child of htmlNode.childNodes) {
         const transformedChild = traverse(child);
 
         if (!transformedChild) {

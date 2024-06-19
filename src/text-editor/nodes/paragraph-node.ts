@@ -1,7 +1,4 @@
-import {
-  extractEditorNodeTypeAttr,
-  findEditorNodeFromType,
-} from "../utils/node";
+import { findEditorNodeFromType } from "../utils/node";
 import Node, { JsonNode } from "./node";
 
 class ParagraphNode extends Node<{}, HTMLElement, JsonNode> {
@@ -32,26 +29,8 @@ class ParagraphNode extends Node<{}, HTMLElement, JsonNode> {
     return ParagraphNode.create(children);
   }
 
-  static fromHtml(node: Element): Node {
-    const children = [];
-
-    for (const child of node.children) {
-      const editorNodeTypeAttr = extractEditorNodeTypeAttr(child);
-
-      if (!editorNodeTypeAttr) {
-        continue;
-      }
-
-      const EditorNode = findEditorNodeFromType(editorNodeTypeAttr);
-
-      if (!EditorNode) {
-        continue;
-      }
-
-      children.push(EditorNode.fromHtml(child));
-    }
-
-    return ParagraphNode.create(children);
+  static fromHtml(_node: Element): Node {
+    return ParagraphNode.create([]);
   }
 
   static create(children: Node[]) {

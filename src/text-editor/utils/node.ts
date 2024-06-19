@@ -16,5 +16,7 @@ const REGISTERED_EDITOR_NODES = [
 export const findEditorNodeFromType = (type: string) =>
   REGISTERED_EDITOR_NODES.find((n) => n.getType() === type) || null;
 
-export const extractEditorNodeTypeAttr = (el: Element): Maybe<string> =>
-  el.getAttribute("data-node-type") || null;
+export const extractEditorNodeTypeAttr = (
+  el: Element | ChildNode
+  // @ts-ignore
+): Maybe<string> => el.getAttribute("data-node-type") || null;

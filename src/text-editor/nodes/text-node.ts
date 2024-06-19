@@ -18,7 +18,7 @@ class TextNode extends Node<TextNodeData, Text> {
   }
 
   static fromHtml(node: Element): TextNode {
-    return TextNode.create(node.childNodes[0].textContent || "");
+    return TextNode.create(node.textContent || "");
   }
 
   static create(text: string): TextNode {
@@ -41,6 +41,11 @@ class TextNode extends Node<TextNodeData, Text> {
 
   toText(): string {
     return this.data.text;
+  }
+
+  setChild(_node: Node<{}, unknown, JsonNode<{}>>): void {}
+  getChildren(): Node<{}, unknown, JsonNode<{}>>[] {
+    return [];
   }
 }
 
