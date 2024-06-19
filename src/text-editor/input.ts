@@ -52,6 +52,18 @@ class Input {
   getElement(): HTMLElement {
     return this.#element;
   }
+
+  sync(tree: HTMLCollection): void {
+    this.drop();
+
+    for (const node of tree) {
+      this.#element.appendChild(node);
+    }
+  }
+
+  drop() {
+    this.#element.innerHTML = "";
+  }
 }
 
 export default Input;

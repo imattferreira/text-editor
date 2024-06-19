@@ -40,7 +40,6 @@ class EditorState {
 
   fromHtml(html: Document) {
     const traverse = (htmlNode: ChildNode): Maybe<Node> => {
-      console.log(htmlNode);
       if (htmlNode.nodeType === globalThis.Node.TEXT_NODE) {
         return TextNode.fromHtml(htmlNode as Element);
       }
@@ -66,7 +65,6 @@ class EditorState {
           continue;
         }
 
-        // TODO: change it
         transformed.setChild(transformedChild);
       }
 

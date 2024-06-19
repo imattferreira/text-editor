@@ -5,11 +5,10 @@
  * - a way to insert text to internal tree
  * - allow copy (selection) and paste
  * - nodes (bold, italic, img, video)
+ * - remove unused params
+ * - attempt to remove typing castings
  */
 import TextEditor from "./text-editor";
-import BreakLineNode from "./text-editor/nodes/break-line";
-import ParagraphNode from "./text-editor/nodes/paragraph-node";
-import TextNode from "./text-editor/nodes/text-node";
 import "./text-editor/styles.css";
 
 function main() {
@@ -33,9 +32,13 @@ function main() {
   // textEditor.getState().toText();
 
   // WIP
-  // const parser = new DOMParser();
-  // const dom = parser.parseFromString("", "text/html");
-  // textEditor.getState().fromHtml(dom);
+  const parser = new DOMParser();
+  const dom = parser.parseFromString(
+    `<p data-node-type="paragraph">Hello Text Editor!!! <b data-node-type="bold">msg</b></p>`,
+    "text/html"
+  );
+  textEditor.getState().fromHtml(dom);
+  textEditor.sync();
 
   // textEditor.getState().fromJson();
 }

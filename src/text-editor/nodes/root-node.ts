@@ -13,15 +13,15 @@ class RootNode extends Node<{}, HTMLCollection, JsonNode[]> {
   }
 
   toHtml() {
-    const dom = new Document();
+    const body = document.createElement("body");
 
     for (const child of this.#nodes) {
       const html = child.toHtml() as Element;
 
-      dom.body.appendChild(html);
+      body.appendChild(html);
     }
 
-    return dom.body.children;
+    return body.children;
   }
 
   toJson() {
